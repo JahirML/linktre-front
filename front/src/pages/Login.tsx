@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 import ErrorMessage from "../components/ErrorMessage";
 import type { LoginForm } from "../types";
+import useLogin from "../hooks/useLogin";
 
 function Login() {
   const initialValues = {
@@ -13,10 +14,15 @@ function Login() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<LoginForm>({ defaultValues: initialValues });
 
+  const { login } = useLogin();
+
   function handleLogin(data: LoginForm) {
-    console.log(data);
+    login(data, {
+      onSuccess: () => reset(),
+    });
   }
 
   return (
@@ -25,7 +31,7 @@ function Login() {
 
       <form
         onSubmit={handleSubmit(handleLogin)}
-        className="bg-white px-5 py-20 rounded-lg space-y-10 mt-10"
+        className="bg-white px-5 py-20 rounded-lg space-y-10 mt-10 text-slate-600"
         noValidate
       >
         <div className="grid grid-cols-1 space-y-3">
@@ -72,7 +78,7 @@ function Login() {
         />
       </form>
 
-      <nav className="mt-10 text-cente">
+      <nav className="mt-10 text-center">
         <Link to="/auth/register" className="text-lg block">
           ¿No tienes cuenta? <span className="text-sky-500">Crea una aqui</span>
         </Link>

@@ -9,7 +9,8 @@ export const registerUser = async (formData: RegisterForm) => {
     return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
-      console.log(error.response.data.error);
+      throw new Error(error.response.data.error);
     }
+    throw error;
   }
 };

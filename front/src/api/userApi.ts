@@ -1,12 +1,12 @@
+import api from "../config/axios";
 import type { RegisterForm } from "../types";
-import axios, { isAxiosError } from "axios";
+import { isAxiosError } from "axios";
 
 export const registerUser = async (formData: RegisterForm) => {
   try {
-    const url = `${import.meta.env.VITE_API_URL}/auth/register`;
-    const { data } = await axios.post(url, formData);
+    const { data } = await api.post("/auth/register", formData);
     console.log(data);
-    // return data;
+    return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       console.log(error.response.data.error);

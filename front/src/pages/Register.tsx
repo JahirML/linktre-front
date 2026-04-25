@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import ErrorMessage from "../components/ErrorMessage";
 
 import type { RegisterForm } from "../types";
-import { registerUser } from "../api/userApi";
+import useRegister from "../hooks/useRegister";
 
 function Register() {
   const initialValues = {
@@ -21,13 +21,12 @@ function Register() {
     handleSubmit,
     getValues,
   } = useForm<RegisterForm>({ defaultValues: initialValues });
+  const { registerUser } = useRegister();
 
   async function onSubmit(data: RegisterForm) {
-    // console.log(data);
-    const res = await registerUser(data);
-    console.log(res);
-
-    // reset();
+    registerUser(data, {
+      onSuccess: () => reset(),
+    });
   }
 
   return (

@@ -3,8 +3,8 @@ import "./App.css";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AuthLayout from "./components/Layouts/AuthLayout";
-import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ToastContainer } from "react-toastify";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +21,12 @@ function App() {
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>
-      <Toaster position="top-center" />
+      <ToastContainer
+        position="top-center"
+        closeOnClick
+        pauseOnHover={false}
+        pauseOnFocusLoss={false}
+      />
     </>
   );
 }

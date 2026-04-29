@@ -21,7 +21,10 @@ function Login() {
 
   function handleLogin(data: LoginForm) {
     login(data, {
-      onSuccess: () => reset(),
+      onSuccess: (data) => {
+        localStorage.setItem("token", JSON.stringify(data));
+        reset();
+      },
     });
   }
 

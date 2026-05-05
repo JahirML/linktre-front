@@ -22,7 +22,7 @@ function Login() {
   function handleLogin(data: LoginForm) {
     login(data, {
       onSuccess: (data) => {
-        localStorage.setItem("token", JSON.stringify(data));
+        localStorage.setItem("token", data);
         reset();
       },
     });

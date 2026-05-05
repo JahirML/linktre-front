@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AuthLayout from "./components/Layouts/AuthLayout";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToastContainer } from "react-toastify";
 import AppLayout from "./components/Layouts/AppLayout";
 import LinkTree from "./pages/LinkTree";
@@ -27,6 +28,7 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
 
       <ToastContainer

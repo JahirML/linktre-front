@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import ErrorMessage from "../components/ErrorMessage";
 import type { LoginForm } from "../types";
 import useLogin from "../hooks/useLogin";
@@ -9,6 +9,7 @@ function Login() {
     email: "",
     password: "",
   };
+  const navigate = useNavigate();
 
   const {
     register,
@@ -24,6 +25,7 @@ function Login() {
       onSuccess: (data) => {
         localStorage.setItem("token", data);
         reset();
+        navigate("/admin", { replace: true });
       },
     });
   }

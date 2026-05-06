@@ -1,8 +1,15 @@
 import { Link, Outlet } from "react-router";
-import Logo from "../header/Logo";
 import NavigationTabs from "../NavigationTabs";
+import Spinner from "../Spinner";
+import type { User } from "../../types";
+import Logo from "../header/Logo";
 
-export default function AppLayout() {
+interface Props {
+  user: User;
+  isLoading: boolean;
+}
+
+function AppLayout({ user, isLoading }: Props) {
   return (
     <>
       <header className="bg-slate-800 py-5">
@@ -20,28 +27,34 @@ export default function AppLayout() {
           </div>
         </div>
       </header>
-      <div className="bg-gray-100  min-h-screen py-10">
-        <main className="mx-auto max-w-5xl p-10 md:p-0">
-          <NavigationTabs />
-          <div className="flex justify-end">
-            <Link
-              className="font-bold text-right text-slate-800 text-2xl"
-              to={"profile"}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              Visitar Mi Perfil
-            </Link>
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-10 mt-10">
-            <div className="flex-1 ">
-              <Outlet />
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <div className="bg-gray-100  min-h-screen py-10">
+          <main className="mx-auto max-w-5xl p-10 md:p-0">
+            <NavigationTabs />
+            <div className="flex justify-end">
+              <Link
+                className="font-bold text-right text-slate-800 text-2xl"
+                to={"profile"}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                Visitar Mi Perfil {user.handle}
+              </Link>
             </div>
-            <div className="w-full md:w-96 bg-slate-800 px-5 py-10 space-y-6"></div>
-          </div>
-        </main>
-      </div>
+
+            <div className="flex flex-col md:flex-row gap-10 mt-10">
+              <div className="flex-1 ">
+                <Outlet />
+              </div>
+              <div className="w-full md:w-96 bg-slate-800 px-5 py-10 space-y-6"></div>
+            </div>
+          </main>
+        </div>
+      )}
     </>
   );
 }
+
+export default AppLayout;

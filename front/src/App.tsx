@@ -6,9 +6,9 @@ import AuthLayout from "./components/Layouts/AuthLayout";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToastContainer } from "react-toastify";
-import AppLayout from "./components/Layouts/AppLayout";
 import LinkTree from "./pages/LinkTree";
 import Profile from "./pages/Profile";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +22,7 @@ function App() {
               <Route path="/auth/login" element={<Login />} />
               <Route path="/auth/register" element={<Register />} />
             </Route>
-            <Route path="/admin" element={<AppLayout />}>
+            <Route path="/admin" element={<ProtectedRoute />}>
               <Route index={true} element={<LinkTree />} />
               <Route path="profile" element={<Profile />} />
             </Route>

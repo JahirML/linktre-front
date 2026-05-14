@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import ErrorMessage from "../components/ErrorMessage";
 
 import type { RegisterForm } from "../types";
@@ -21,11 +21,16 @@ function Register() {
     handleSubmit,
     getValues,
   } = useForm<RegisterForm>({ defaultValues: initialValues });
+  const navigate = useNavigate();
+
   const { registerUser } = useRegister();
 
   async function onSubmit(data: RegisterForm) {
     registerUser(data, {
-      onSuccess: () => reset(),
+      onSuccess: () => {
+        navigate("/login");
+        reset();
+      },
     });
   }
 

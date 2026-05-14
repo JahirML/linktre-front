@@ -29,7 +29,6 @@ export const loginUser = async (formData: LoginForm) => {
 export const getUser = async () => {
   try {
     const { data } = await api.get<User>("/user");
-    console.log(data);
     return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {

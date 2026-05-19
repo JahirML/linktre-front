@@ -15,6 +15,4 @@ export type LoginForm = Pick<User, "email"> & {
   password: string;
 };
 
-export type UpdateProfileForm = Pick<User, "handle"> & {
-  description: string;
-};
+export type UpdateProfileForm = Pick<User, "handle" | "description">;

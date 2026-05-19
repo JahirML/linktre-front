@@ -2,11 +2,14 @@ import { useForm } from "react-hook-form";
 import useGetUser from "../../hooks/useGetUser";
 import type { UpdateProfileForm } from "../../types";
 import ErrorMessage from "../ErrorMessage";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateProfile } from "../../api/userApi";
+import { toast } from "react-toastify";
 
 export default function ProfileForm() {
   const { user } = useGetUser();
+  const queryClient = useQueryClient();
 
-  if (!user) return;
   const initialValues = {
     handle: user?.handle,
     description: user?.description,
@@ -16,11 +19,21 @@ export default function ProfileForm() {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<UpdateProfileForm>({ defaultValues: initialValues });
 
+  const { mutate } = useMutation({
+    mutationFn: updateProfile,
+    onSuccess: () => {
+      toast.success("Perfil Actualizado correctamente");
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
+
   function submitData(data: UpdateProfileForm) {
-    console.log(data);
+    mutate(data);
   }
 
   return (

@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form";
 import useGetUser from "../../hooks/useGetUser";
-import type { UpdateProfileForm } from "../../types";
+import type { UpdateProfileForm, User } from "../../types";
 import ErrorMessage from "../ErrorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateProfile } from "../../api/userApi";
+import { updateImage, updateProfile } from "../../api/userApi";
 import { toast } from "react-toastify";
+import type { ChangeEvent } from "react";
 
 export default function ProfileForm() {
   const { user } = useGetUser();
@@ -31,6 +32,28 @@ export default function ProfileForm() {
       toast.error(err.message);
     },
   });
+
+  const { mutate: mutateImage } = useMutation({
+    mutationFn: updateImage,
+    onSuccess: (data) => {
+      // queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.setQueryData(["user"], (prevData: User) => {
+        return {
+          ...prevData,
+          image: data,
+        };
+      });
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const file = e.target.files[0];
+    mutateImage(file);
+  };
 
   function submitData(data: UpdateProfileForm) {
     mutate(data);
@@ -77,7 +100,7 @@ export default function ProfileForm() {
           name="handle"
           className="border-none bg-slate-100 rounded-lg p-2"
           accept="image/*"
-          onChange={() => {}}
+          onChange={handleChange}
         />
       </div>
 

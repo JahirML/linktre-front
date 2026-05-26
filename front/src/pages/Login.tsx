@@ -1,10 +1,12 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import ErrorMessage from "../components/ErrorMessage";
 import type { LoginForm } from "../types";
 import useLogin from "../hooks/useLogin";
+import useGetUser from "../hooks/useGetUser";
 
 function Login() {
+  const { user } = useGetUser();
   const initialValues = {
     email: "",
     password: "",
@@ -29,6 +31,8 @@ function Login() {
       },
     });
   }
+
+  if (user) return <Navigate to="/admin" />;
 
   return (
     <>

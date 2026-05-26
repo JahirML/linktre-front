@@ -48,7 +48,17 @@ function AppLayout({ user, isLoading }: Props) {
               <div className="flex-1 ">
                 <Outlet />
               </div>
-              <div className="w-full md:w-96 bg-slate-800 px-5 py-10 space-y-6"></div>
+              <div className="w-full md:w-96 bg-slate-800 px-5 py-10 space-y-6 text-slate-100 text-center">
+                <p className="font-semibold text-4xl ">{user.handle}</p>
+                {user.image && (
+                  <img
+                    src={user.image}
+                    alt={`image of ${user.handle}`}
+                    className="mx-auto max-w-62.5"
+                  />
+                )}
+                <p className="text-lg font-semibold">{user.description}</p>
+              </div>
             </div>
           </main>
         </div>

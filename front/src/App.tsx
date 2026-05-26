@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import "./App.css";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -18,6 +18,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Routes>
+            <Route path="/" element={<Navigate to="/auth/login" />} />
             <Route element={<AuthLayout />}>
               <Route path="/auth/login" element={<Login />} />
               <Route path="/auth/register" element={<Register />} />
